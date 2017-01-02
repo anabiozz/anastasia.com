@@ -19,7 +19,7 @@ func pagesHandler(w http.ResponseWriter, r *http.Request, params map[string]stri
 		return
 	}
 	fmt.Println(path)
-	//http.ServeFile(w, r, "app/stylesheets/*")
+	http.FileServer(http.Dir("app"))
 	http.ServeFile(w, r, path)
 	return
 }
@@ -32,7 +32,7 @@ func InitializePages(router *httptreemux.TreeMux) {
 func main() {
 	httpRouter := httptreemux.New()
 	InitializePages(httpRouter)
-	err := http.ListenAndServe("localhost:8083", httpRouter)
+	err := http.ListenAndServe("localhost:8084", httpRouter)
 	if err != nil {
 		log.Fatal("Error: Couldn't start the HTTP server:", err)
 	}
